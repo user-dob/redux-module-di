@@ -30,7 +30,7 @@ export class ModuleBuilder {
         let module = new Module(target);
 
         if (this.modules.has(module.name)) {
-            return this.modules.get(module.name);
+            return <Module>this.modules.get(module.name);
         }
 
         this.modules.set(module.name, module);

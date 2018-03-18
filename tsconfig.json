@@ -1,11 +1,21 @@
 {
-    "compilerOptions": {
+  "compilerOptions": {
       "target": "es6",
-      "types": ["reflect-metadata", "mocha"],
+      "lib": ["es6", "dom"],
+      "types": ["mocha", "reflect-metadata"],
+      "sourceMap": true,
       "module": "commonjs",
+      "moduleResolution": "node",
       "jsx": "react",
-      "noImplicitAny": true,
       "experimentalDecorators": true,
-      "emitDecoratorMetadata": true
-    }
+      "emitDecoratorMetadata": true,
+      "noImplicitAny": true,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "suppressImplicitAnyIndexErrors": false,
+      "noResolve": false,
+      "noUnusedParameters": false,
+      "noUnusedLocals": true,
+      "strictNullChecks": true
   }
+}

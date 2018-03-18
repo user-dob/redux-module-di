@@ -20,13 +20,13 @@ export class Module {
     }
 
     resolve(): Type<any> {
-        const providers: any[] = [].concat(
-            [this.target],
-            this.exports,
-            this.reducers,
-            this.sagas,
-            this.providers
-        )
+        const providers = [
+            this.target,
+            ...this.exports,
+            ...this.reducers,
+            ...this.sagas,
+            ...this.providers
+        ];
 
         providers.forEach(provider => this.setProvider(provider));
 
