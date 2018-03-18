@@ -1,0 +1,39 @@
+{
+  "name": "redux.di",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha -r ts-node/register test/**/*.test.ts --require test/helpers.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/user-dob/redux.di.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/user-dob/redux.di/issues"
+  },
+  "homepage": "https://github.com/user-dob/redux.di#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.2",
+    "@types/mocha": "^2.2.48",
+    "chai": "^4.1.2",
+    "mocha": "^5.0.4",
+    "ts-loader": "^4.1.0",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "@types/react": "^16.0.40",
+    "@types/redux": "^3.6.0",
+    "@types/redux-saga": "^0.10.5",
+    "inversify": "^4.11.1",
+    "react": "^16.2.0",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0",
+    "reflect-metadata": "^0.1.12"
+  }
+}
