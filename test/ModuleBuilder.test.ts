@@ -55,4 +55,42 @@ describe('ModuleBuilder', () => {
         build.getProvider(Test);
     })
 
+    it('build module with imports', () => {
+
+        @injectable()
+        class ExportProvider {}
+
+        @module({
+            name: 'import',
+            exports: [
+                ExportProvider
+            ]
+        })
+        class ImportModule {} 
+
+        @injectable()
+        class Test {
+            constructor(provider: ExportProvider) {
+                expect(provider).to.be.instanceof(ExportProvider);
+            }
+        }
+        
+        @module({
+            name: 'test',
+            imports: [
+                ImportModule
+            ],
+            providers: [
+                Test
+            ]
+        })
+        class TestModule {}
+
+        const build = new ModuleBuilder()
+            .addModule(TestModule)
+            .build();
+
+        build.getProvider(Test);
+    })
+
 })
