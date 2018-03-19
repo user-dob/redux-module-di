@@ -22,10 +22,10 @@ export class Module {
     resolve(): Type<any> {
         const providers = [
             this.target,
+            ...this.providers,
             ...this.exports,
             ...this.reducers,
-            ...this.sagas,
-            ...this.providers
+            ...this.sagas
         ];
 
         providers.forEach(provider => this.setProvider(provider));

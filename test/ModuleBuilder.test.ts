@@ -55,7 +55,7 @@ describe('ModuleBuilder', () => {
         build.getProvider(Test);
     })
 
-    it('build module with imports', () => {
+    it('build module with exports', () => {
 
         @injectable()
         class ExportProvider {}
@@ -92,5 +92,47 @@ describe('ModuleBuilder', () => {
 
         build.getProvider(Test);
     })
+
+    it('build module with exports with useValue', () => {
+
+        @injectable()
+        class ExportProvider {}
+
+        @module({
+            name: 'import',
+            exports: [
+                ExportProvider
+            ],
+            providers: [
+                {provide: ExportProvider, useValue: 1}
+            ]            
+        })
+        class ImportModule {} 
+
+        @injectable()
+        class Test {
+            constructor(provider: ExportProvider) {
+                expect(provider).to.be.eql(1);
+            }
+        }
+        
+        @module({
+            name: 'test',
+            imports: [
+                ImportModule
+            ],
+            providers: [
+                Test
+            ]
+        })
+        class TestModule {}
+
+        const build = new ModuleBuilder()
+            .addModule(TestModule)
+            .build();
+
+        build.getProvider(Test);
+    })
+    
 
 })
