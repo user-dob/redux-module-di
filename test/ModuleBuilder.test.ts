@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { injectable } from 'inversify';
 import { module } from '../src/annotation/module';
 import { ModuleBuilder } from '../src/ModuleBuilder';
 
@@ -9,20 +10,49 @@ describe('ModuleBuilder', () => {
         @module({
             name: 'test'
         })
-        class Test {}
+        class TestModule {}
 
-        const m = new ModuleBuilder()
-            .addModule(Test)
+        const build = new ModuleBuilder()
+            .addModule(TestModule)
             .build();
 
-        expect(m.name).to.be.eql('test');
-        expect(m.imports).to.be.eql([]);
-        expect(m.exports).to.be.eql([]);
-        expect(m.providers).to.be.eql([]);
-        expect(m.reducers).to.be.eql([]);
-        expect(m.sagas).to.be.eql([]);
-        expect(m.components).to.be.eql([]);
-        expect(m.bootstrap).to.be.eql(null);
+        expect(build.name).to.be.eql('test');
+        expect(build.imports).to.be.eql([]);
+        expect(build.exports).to.be.eql([]);
+        expect(build.providers).to.be.eql([]);
+        expect(build.reducers).to.be.eql([]);
+        expect(build.sagas).to.be.eql([]);
+        expect(build.components).to.be.eql([]);
+        expect(build.bootstrap).to.be.eql(null);
+
+    })
+
+    it('build module with provider', () => {
+
+        @injectable()
+        class Provider {}
+
+        @injectable()
+        class Test {
+            constructor(provider: Provider) {
+                expect(provider).to.be.instanceof(Provider);
+            }
+        }
+
+        @module({
+            name: 'test',
+            providers: [
+                Provider,
+                Test
+            ]
+        })
+        class TestModule {}        
+
+        const build = new ModuleBuilder()
+            .addModule(TestModule)
+            .build();
+
+        build.getProvider(Test);
     })
 
 })
