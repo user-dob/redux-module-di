@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { module, MODULE_METADATA_KEY } from '../../src/annotation/module';
+import { module, MODULE_METADATA_KEY } from '../../src';
 
 describe('@module()', () => {
 
@@ -14,5 +14,4 @@ describe('@module()', () => {
 
         expect(metadata).to.be.eql({name: 'test'});
     })
-
 })
