@@ -94,6 +94,6 @@ export class Module {
     }  
 
     get bootstrap(): any {
-        return this.props.bootstrap;
+        return this.props.bootstrap || null;
     }
 }

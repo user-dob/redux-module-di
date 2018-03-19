@@ -2,7 +2,7 @@ import { Module } from './Module';
 import { Type } from './interfaces/type';
 import { IModuleVisitor } from './visitors/IModuleVisitor';
 
-export class ModuleBuilder {
+export class ModuleBuilder implements IModuleVisitor {
     private modules: Map<string, Module>;
     private visitors: IModuleVisitor[] = [];
     private target: Type<any>;
