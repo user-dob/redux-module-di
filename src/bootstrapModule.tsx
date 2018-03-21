@@ -1,5 +1,8 @@
+import * as React from 'react';
+import { render } from 'react-dom';
 import { createStore, applyMiddleware, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { Provider } from 'react-redux';
 import { Module } from './Module';
 import { ModuleBuilder } from './ModuleBuilder';
 import { Type } from './interfaces/type';
@@ -26,10 +29,10 @@ export const createModuleStore = (target: Type<any>, middlewares: any[] = []): M
 
     middlewares.push(sagaMiddleware);
 
-    const store = <ModuleStore<any>>createStore(
+    const store = createStore(
         reducer,
         applyMiddleware(...middlewares)
-    );
+    ) as ModuleStore<any>;
 
     store.runSaga = () => {
         sagaMiddleware.run(saga);
@@ -38,4 +41,18 @@ export const createModuleStore = (target: Type<any>, middlewares: any[] = []): M
     store.module = module;
 
     return store;
+}
+
+export const bootstrapModule = (target: Type<any>, element: HTMLElement) => {
+    const store = createModuleStore(target);
+    const Root = () => {
+        return (
+            <Provider store={store}>
+                <store.module.bootstrap />
+            </Provider>
+        )
+    }    
+
+    render(<Root />, element);
+    store.runSaga();
 }
