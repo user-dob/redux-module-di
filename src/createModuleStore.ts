@@ -1,9 +1,14 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { Module } from './Module';
 import { ModuleBuilder } from './ModuleBuilder';
 import { Type } from './interfaces/type';
 import { ReducerModuleVisitor, SagaModuleVisitor } from './visitors';
+
+interface ModuleStore<S> extends Store<S> {
+    runSaga(): void;
+    module: Module
+}
 
 export const createModuleStore = (target: Type<any>, middlewares: any[] = []) => {
     const reducerModuleVisitor = new ReducerModuleVisitor();
@@ -21,12 +26,16 @@ export const createModuleStore = (target: Type<any>, middlewares: any[] = []) =>
 
     middlewares.push(sagaMiddleware);
 
-    const store = createStore(
+    const store = <ModuleStore<any>>createStore(
         reducer,
         applyMiddleware(...middlewares)
     );
 
-    sagaMiddleware.run(saga);
+    store.runSaga = () => {
+        sagaMiddleware.run(saga);
+    }
+
+    store.module = module;
 
     return store;
 }
