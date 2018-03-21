@@ -5,12 +5,12 @@ import { ModuleBuilder } from './ModuleBuilder';
 import { Type } from './interfaces/type';
 import { ReducerModuleVisitor, SagaModuleVisitor } from './visitors';
 
-interface ModuleStore<S> extends Store<S> {
+export interface ModuleStore<S> extends Store<S> {
     runSaga(): void;
     module: Module
 }
 
-export const createModuleStore = (target: Type<any>, middlewares: any[] = []) => {
+export const createModuleStore = (target: Type<any>, middlewares: any[] = []): ModuleStore<any> => {
     const reducerModuleVisitor = new ReducerModuleVisitor();
     const sagaModuleVisitor = new SagaModuleVisitor();
 
