@@ -34,10 +34,12 @@
   },
   "dependencies": {
     "@types/react": "^16.0.40",
+    "@types/react-redux": "^5.0.15",
     "@types/redux": "^3.6.0",
     "@types/redux-saga": "^0.10.5",
     "inversify": "^4.11.1",
     "react": "^16.2.0",
+    "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "reflect-metadata": "^0.1.12"
