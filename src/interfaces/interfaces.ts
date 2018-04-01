@@ -1,8 +1,8 @@
-import { Reducer } from 'redux';
-import { Effect } from 'redux-saga';
-import { Container } from 'inversify';
-import { ReactNode } from 'react';
-import { Type } from './type';
+import { Reducer } from "redux";
+import { Effect } from "redux-saga";
+import { Container } from "inversify";
+import { ReactNode } from "react";
+import { Type } from "./type";
 
 export interface IAction {
     type: string;

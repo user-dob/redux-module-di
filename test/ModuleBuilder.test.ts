@@ -1,16 +1,13 @@
-import { expect } from 'chai';
-import { injectable } from 'inversify';
-import { module } from '../src';
-import { ModuleBuilder } from '../src';
-import { Module } from '../src';
-import { IModuleVisitor } from '../src';
+import { expect } from "chai";
+import { injectable } from "inversify";
+import { module, ModuleBuilder, Module, IModuleVisitor } from "../src";
 
-describe('ModuleBuilder', () => {
+describe("ModuleBuilder", () => {
 
-    it('build empty module', () => {
+    it("build empty module", () => {
 
         @module({
-            name: 'test'
+            name: "test"
         })
         class TestModule {}
 
@@ -18,7 +15,7 @@ describe('ModuleBuilder', () => {
             .addModule(TestModule)
             .build();
 
-        expect(build.name).to.be.eql('test');
+        expect(build.name).to.be.eql("test");
         expect(build.imports).to.be.eql([]);
         expect(build.exports).to.be.eql([]);
         expect(build.providers).to.be.eql([]);
@@ -27,22 +24,22 @@ describe('ModuleBuilder', () => {
         expect(build.components).to.be.eql([]);
         expect(build.bootstrap).to.be.eql(null);
 
-    })
+    });
 
-    it('build module with provider', () => {
+    it("build module with provider", () => {
 
         @injectable()
         class Provider {}
 
         @injectable()
         class Test {
-            constructor(provider: Provider) {
+            public constructor(provider: Provider) {
                 expect(provider).to.be.instanceof(Provider);
             }
         }
 
         @module({
-            name: 'test',
+            name: "test",
             providers: [
                 Provider,
                 Test
@@ -55,9 +52,9 @@ describe('ModuleBuilder', () => {
             .build();
 
         build.getProvider(Test);
-    })
+    });
 
-    it('build module with useClass', () => {
+    it("build module with useClass", () => {
 
         @injectable()
         class Provider {}
@@ -67,13 +64,13 @@ describe('ModuleBuilder', () => {
 
         @injectable()
         class Test {
-            constructor(provider: Provider) {
+            public constructor(provider: Provider) {
                 expect(provider.constructor).to.be.eql(Provider1);
             }
         }
 
         @module({
-            name: 'test',
+            name: "test",
             providers: [
                 {provide: Provider, useClass: Provider1},
                 Test
@@ -86,9 +83,9 @@ describe('ModuleBuilder', () => {
             .build();
 
         build.getProvider(Test);
-    })
+    });
 
-    it('build module with useValue', () => {
+    it("build module with useValue", () => {
 
         @injectable()
         class Provider {}
@@ -97,13 +94,13 @@ describe('ModuleBuilder', () => {
         
         @injectable()
         class Test {
-            constructor(provider: Provider) {
+            public constructor(provider: Provider) {
                 expect(provider).to.be.eql(value);
             }
         }
 
         @module({
-            name: 'test',
+            name: "test",
             providers: [
                 {provide: Provider, useValue: value},
                 Test
@@ -116,22 +113,22 @@ describe('ModuleBuilder', () => {
             .build();
 
         build.getProvider(Test);
-    })
+    });
 
-    it('build module with useContainer', () => {
+    it("build module with useContainer", () => {
 
         @injectable()
         class Provider {}
         
         @injectable()
         class Test {
-            constructor(provider: Provider) {
+            public constructor(provider: Provider) {
                 expect(provider).to.be.instanceof(Provider);
             }
         }
 
         @module({
-            name: 'test',
+            name: "test",
             providers: [
                 {provide: Provider, useContainer: container => container.bind(Provider).toSelf()},
                 Test
@@ -144,22 +141,22 @@ describe('ModuleBuilder', () => {
             .build();
 
         build.getProvider(Test);
-    })
+    });
 
-    it('build module with 2 identical Providers', () => {
+    it("build module with 2 identical Providers", () => {
 
         @injectable()
         class Provider {}
         
         @injectable()
         class Test {
-            constructor(provider: Provider) {
+            public constructor(provider: Provider) {
                 expect(provider).to.be.instanceof(Provider);
             }
         }
 
         @module({
-            name: 'test',
+            name: "test",
             providers: [
                 Provider,
                 Provider,
@@ -173,15 +170,15 @@ describe('ModuleBuilder', () => {
             .build();
 
         build.getProvider(Test);
-    })
+    });
 
-    it('build module with exports', () => {
+    it("build module with exports", () => {
 
         @injectable()
         class ExportProvider {}
 
         @module({
-            name: 'import',
+            name: "import",
             exports: [
                 ExportProvider
             ]
@@ -190,13 +187,13 @@ describe('ModuleBuilder', () => {
 
         @injectable()
         class Test {
-            constructor(provider: ExportProvider) {
+            public constructor(provider: ExportProvider) {
                 expect(provider).to.be.instanceof(ExportProvider);
             }
         }
         
         @module({
-            name: 'test',
+            name: "test",
             imports: [
                 ImportModule
             ],
@@ -211,15 +208,15 @@ describe('ModuleBuilder', () => {
             .build();
 
         build.getProvider(Test);
-    })
+    });
 
-    it('build module with exports with useValue', () => {
+    it("build module with exports with useValue", () => {
 
         @injectable()
         class ExportProvider {}
 
         @module({
-            name: 'import',
+            name: "import",
             exports: [
                 ExportProvider
             ],
@@ -231,13 +228,13 @@ describe('ModuleBuilder', () => {
 
         @injectable()
         class Test {
-            constructor(provider: ExportProvider) {
+            public constructor(provider: ExportProvider) {
                 expect(provider).to.be.eql(1);
             }
         }
         
         @module({
-            name: 'test',
+            name: "test",
             imports: [
                 ImportModule
             ],
@@ -252,16 +249,15 @@ describe('ModuleBuilder', () => {
             .build();
 
         build.getProvider(Test);
-    })
+    });
 
-
-    it('build module with 2 exports', () => {
+    it("build module with 2 exports", () => {
 
         @injectable()
         class ExportProvider {}
 
         @module({
-            name: 'import',
+            name: "import",
             exports: [
                 ExportProvider
             ]            
@@ -269,31 +265,31 @@ describe('ModuleBuilder', () => {
         class ImportModule {} 
         
         @module({
-            name: 'test1',
+            name: "test1",
             imports: [
                 ImportModule
             ]
         })
         class TestModule1 {
-            constructor(provider: ExportProvider) {
+            public constructor(provider: ExportProvider) {
                 expect(provider).to.be.instanceof(ExportProvider);
             }
         }
 
         @module({
-            name: 'test2',
+            name: "test2",
             imports: [
                 ImportModule
             ]
         })
         class TestModule2 {
-            constructor(provider: ExportProvider) {
+            public constructor(provider: ExportProvider) {
                 expect(provider).to.be.instanceof(ExportProvider);
             }
         }
 
         @module({
-            name: 'test',
+            name: "test",
             imports: [
                 TestModule1,
                 TestModule2
@@ -306,29 +302,27 @@ describe('ModuleBuilder', () => {
             .build();
 
         build.getProvider(TestModule);
-    })
+    });
 
-    it('build module with Visitor', () => {
+    it("build module with Visitor", () => {
 
         class Visitor implements IModuleVisitor {
-            visit(module: Module): void {
-                expect(module.name).to.be.eql('test');                
+            public visit(m: Module): void {
+                expect(m.name).to.be.eql("test");                
             }
         }
 
         @module({
-            name: 'test'
+            name: "test"
         })
         class TestModule {}
 
         const visitor = new Visitor();
 
-        const build = new ModuleBuilder()
+        new ModuleBuilder()
             .addModule(TestModule)
             .addModuleVisitor(visitor)
             .build();
 
-    })
-    
-
-})
+    });
+});

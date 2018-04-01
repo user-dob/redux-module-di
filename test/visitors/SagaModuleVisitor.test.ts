@@ -1,30 +1,30 @@
-import { expect } from 'chai';
-import { injectable } from 'inversify';
-import { take, fork, all, Effect } from 'redux-saga/effects';
-import { module } from '../../src';
-import { ModuleBuilder } from '../../src';
-import { ISagaService, SagaModuleVisitor } from '../../src'
+import { expect } from "chai";
+import { injectable } from "inversify";
+import { take, fork, all, Effect } from "redux-saga/effects";
+import { module, ModuleBuilder, ISagaService, SagaModuleVisitor } from "../../src";
 
-describe('SagaModuleVisitor', () => {
+describe("SagaModuleVisitor", () => {
     
-    it('SagaModuleVisitor with saga', () => {
+    it("SagaModuleVisitor with saga", () => {
 
-        const testSaga = function* () { yield take('increment'); } 
+        const testSaga = function* () {
+            yield take("increment");
+        }; 
 
         @injectable()
         class SagaService implements ISagaService {
 
-            testSaga = testSaga
+            public testSaga = testSaga;
 
-            effects(): Effect[] {
+            public effects(): Effect[] {
                 return [
                     fork(this.testSaga)
-                ]
+                ];
             }
         }
 
         @module({
-            name: 'test',
+            name: "test",
             sagas: [
                 SagaService
             ]
@@ -33,7 +33,7 @@ describe('SagaModuleVisitor', () => {
 
         const sagaModuleVisitor = new SagaModuleVisitor();
 
-        const build = new ModuleBuilder()
+        new ModuleBuilder()
             .addModule(TestModule)
             .addModuleVisitor(sagaModuleVisitor)
             .build();
@@ -42,9 +42,9 @@ describe('SagaModuleVisitor', () => {
         const gen = sagas();
         const effect = all([
             fork(testSaga)
-        ])
+        ]);
 
         expect(gen.next().value).to.deep.equal(effect);
-    })
+    });
 
-})
+});

@@ -1,25 +1,24 @@
-import { ReactNode } from 'react';
-import { Container } from 'inversify';
-import { Type, isType } from './interfaces/type';
-import { ModuleProps, Provider, IReducerService, ISagaService } from './interfaces/interfaces';
-import { IModuleVisitor } from './visitors/IModuleVisitor';
-import { MODULE_METADATA_KEY } from './annotation/module';
+import { Container } from "inversify";
+import { Type, isType } from "./interfaces/type";
+import { ModuleProps, Provider, IReducerService, ISagaService } from "./interfaces/interfaces";
+import { IModuleVisitor } from "./visitors/IModuleVisitor";
+import { MODULE_METADATA_KEY } from "./annotation/module";
 
 export class Module {
     private props: ModuleProps;
     private container: Container;
     private target: Type<any>;
 
-    constructor(target: Type<any>) {
+    public constructor(target: Type<any>) {
         this.target = target;
         this.props = Reflect.getMetadata(MODULE_METADATA_KEY, target);
         if (!this.props) {
-            throw new Error(`Missing required @module annotation in: ${target.name}.`) 
+            throw new Error(`Missing required @module annotation in: ${target.name}.`); 
         }
-        this.container = new Container({defaultScope: 'Singleton'});
+        this.container = new Container({defaultScope: "Singleton"});
     }
 
-    resolve(): Type<any> {
+    public resolve(): Type<any> {
         const providers = [
             this.target,
             ...this.providers,
@@ -33,11 +32,11 @@ export class Module {
         return this.container.resolve(this.target);
     }
 
-    getProvider(provider: Type<any>): any {
+    public getProvider(provider: Type<any>): any {
         return this.container.get(provider);
     }
 
-    setProvider(provider: Provider): any {
+    public setProvider(provider: Provider): any {
         if (isType(provider)) {
             provider = { provide: provider, useClass: provider };
         }        
@@ -45,55 +44,55 @@ export class Module {
         const { provide } = provider;
 
         if (this.container.isBound(provide)) {
-            return
+            return;
         }    
 
-        if ('useClass' in provider) {
+        if ("useClass" in provider) {
             return this.container.bind(provide).to(provider.useClass);
         }
 
-        if ('useValue' in provider) {
+        if ("useValue" in provider) {
             return this.container.bind(provide).toConstantValue(provider.useValue);
         }
 
-        if ('useContainer' in provider) {
+        if ("useContainer" in provider) {
             return provider.useContainer(this.container);
         }
     }
 
-    accept(visitor: IModuleVisitor): void {
+    public accept(visitor: IModuleVisitor): void {
         visitor.visit(this);
     }
 
-    get name(): string {
+    public get name(): string {
         return this.props.name;
     }
 
-    get reducers(): Type<IReducerService>[] {
+    public get reducers(): Type<IReducerService>[] {
         return this.props.reducers || [];
     }
 
-    get sagas(): Type<ISagaService>[] {
+    public get sagas(): Type<ISagaService>[] {
         return this.props.sagas || [];
     }
 
-    get imports(): Type<any>[] {
+    public get imports(): Type<any>[] {
         return this.props.imports || [];
     }
 
-    get exports(): Type<any>[] {
+    public get exports(): Type<any>[] {
         return this.props.exports || [];
     }
 
-    get providers(): Provider[] {
+    public get providers(): Provider[] {
         return this.props.providers || [];
     } 
 
-    get components(): Type<any>[] {
+    public get components(): Type<any>[] {
         return this.props.components || [];
     }  
 
-    get bootstrap(): any {
+    public get bootstrap(): any {
         return this.props.bootstrap || null;
     }
 }

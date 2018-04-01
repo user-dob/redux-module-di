@@ -1,16 +1,16 @@
-import { Effect } from 'redux-saga';
-import { all } from 'redux-saga/effects';
-import { IModuleVisitor } from './IModuleVisitor';
-import { Module } from '../Module';
+import { Effect } from "redux-saga";
+import { all } from "redux-saga/effects";
+import { IModuleVisitor } from "./IModuleVisitor";
+import { Module } from "../Module";
 
 export class SagaModuleVisitor implements IModuleVisitor {
     private effects: Effect[];
 
-    constructor() {
+    public constructor() {
         this.effects = [];
     }
 
-    visit(module: Module): void {
+    public visit(module: Module): void {
         module.sagas
             .map(item => module.getProvider(item))
             .forEach(provider => {
@@ -19,13 +19,11 @@ export class SagaModuleVisitor implements IModuleVisitor {
             });
     }
 
-    createSaga(): () => Iterator<Effect> {
-        const { effects } = this;
+    public createSaga(): () => Iterator<Effect> {
+        const effects = this.effects;
 
-        function* effectsIterator() {
+        return () => function* () {
             yield all(effects);
-        };
-
-        return () => effectsIterator();
+        } ();
     } 
 }

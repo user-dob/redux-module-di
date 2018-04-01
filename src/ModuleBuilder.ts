@@ -1,67 +1,65 @@
-import { Module } from './Module';
-import { Type } from './interfaces/type';
-import { IModuleVisitor } from './visitors/IModuleVisitor';
+import { Module } from "./Module";
+import { Type } from "./interfaces/type";
+import { IModuleVisitor } from "./visitors/IModuleVisitor";
 
 export class ModuleBuilder implements IModuleVisitor {
     private modules: Map<string, Module>;
     private visitors: IModuleVisitor[] = [];
     private target: Type<any>;
 
-    constructor() {
+    public constructor() {
         this.modules = new Map();
         this.visitors = [];
     }
 
-    addModule(target: Type<any>): ModuleBuilder {
+    public addModule(target: Type<any>): ModuleBuilder {
         this.target = target;
         return this;
     }
 
-    addModuleVisitor(visitor: IModuleVisitor): ModuleBuilder {
+    public addModuleVisitor(visitor: IModuleVisitor): ModuleBuilder {
         this.visitors.push(visitor);
         return this;
     }
 
-    visit(module: Module): void {
+    public visit(module: Module): void {
         this.visitors.forEach(visitor => visitor.visit(module));
     }
 
-    initModule(target: Type<any>): Module {
-        let module = new Module(target);
+    public initModule(target: Type<any>): Module {
+        const module = new Module(target);
 
         if (this.modules.has(module.name)) {
-            return <Module>this.modules.get(module.name);
+            return this.modules.get(module.name) as Module;
         }
 
         this.modules.set(module.name, module);
 
         module.imports.forEach(item => {
-            let importModule = this.initModule(item);
-            importModule.exports.forEach(item => {
+            const importModule = this.initModule(item);
+            importModule.exports.forEach(provide => {
                 module.setProvider({
-                    provide: item,
+                    provide,
                     useContainer: container => {
-                        container.bind(item).toConstantValue(importModule.getProvider(item))
+                        container.bind(provide).toConstantValue(importModule.getProvider(provide));
                     }
-                })
-            })
+                });
+            });
         });
 
         module.components.forEach((component: any) => {
-            component.module = module
-        })
+            component.module = module;
+        });
 
         module.resolve();
 
         return module;
     }
 
-    build(): Module {
+    public build(): Module {
         const module = this.initModule(this.target);
 
-        this.modules.forEach(module => {
-            this.visit(module);            
-        });
+        this.modules.forEach(item => this.visit(item));
 
         return module;
     }

@@ -1,20 +1,18 @@
-import { expect } from 'chai';
-import { injectable } from 'inversify';
-import { module } from '../../src';
-import { ModuleBuilder } from '../../src';
-import { IReducerService, ReducerModuleVisitor } from '../../src'
+import { expect } from "chai";
+import { injectable } from "inversify";
+import { module, ModuleBuilder, IReducerService, ReducerModuleVisitor } from "../../src";
 
-describe('ReducerModuleVisitor', () => {
+describe("ReducerModuleVisitor", () => {
 
-    it ('ReducerModuleVisitor with one reducer', () => {
+    it ("ReducerModuleVisitor with one reducer", () => {
 
         @injectable()
         class ReducerServise implements IReducerService {
-            name: string = 'test'
-            reducer(state: any = 0, action: any) {
+            public name = "test";
+            public reducer(state: any = 0, action: any) {
                 switch (action.type) {
-                    case 'increment':
-                        return state + 1;
+                    case "increment":
+                        return +state + 1;
                     default:
                         return state;
                 }
@@ -22,7 +20,7 @@ describe('ReducerModuleVisitor', () => {
         } 
 
         @module({
-            name: 'test',
+            name: "test",
             reducers: [
                 ReducerServise
             ]
@@ -31,36 +29,36 @@ describe('ReducerModuleVisitor', () => {
 
         const reducerModuleVisitor = new ReducerModuleVisitor();
 
-        const build = new ModuleBuilder()
+        new ModuleBuilder()
             .addModule(TestModule)
             .addModuleVisitor(reducerModuleVisitor)
             .build();
 
         const reducer = reducerModuleVisitor.createReducer();
 
-        const s1 = reducer({}, { type: 'increment' })
+        const s1 = reducer({}, { type: "increment" });
         expect(s1).to.be.eql({test: 1});
-        const s2 = reducer(s1, { type: 'increment' })
+        const s2 = reducer(s1, { type: "increment" });
         expect(s2).to.be.eql({test: 2});
-    })
+    });
 
-    it ('ReducerModuleVisitor with one reducer and service', () => {
+    it ("ReducerModuleVisitor with one reducer and service", () => {
 
         @injectable()
         class Provider {}
 
         @injectable()
         class ReducerServise implements IReducerService {
-            name: string = 'test'
+            public name = "test";
 
-            constructor(provider: Provider) {
+            public constructor(provider: Provider) {
                 expect(provider).to.be.instanceof(Provider);
             }
 
-            reducer(state: any = 0, action: any) {
+            public reducer(state: any = 0, action: any) {
                 switch (action.type) {
-                    case 'increment':
-                        return state + 1;
+                    case "increment":
+                        return +state + 1;
                     default:
                         return state;
                 }
@@ -68,7 +66,7 @@ describe('ReducerModuleVisitor', () => {
         } 
 
         @module({
-            name: 'test',
+            name: "test",
             reducers: [
                 ReducerServise
             ],
@@ -80,18 +78,17 @@ describe('ReducerModuleVisitor', () => {
 
         const reducerModuleVisitor = new ReducerModuleVisitor();
 
-        const build = new ModuleBuilder()
+        new ModuleBuilder()
             .addModule(TestModule)
             .addModuleVisitor(reducerModuleVisitor)
             .build();
 
         const reducer = reducerModuleVisitor.createReducer();
 
-        const s1 = reducer({}, { type: 'increment' })
+        const s1 = reducer({}, { type: "increment" });
         expect(s1).to.be.eql({test: 1});
-        const s2 = reducer(s1, { type: 'increment' })
+        const s2 = reducer(s1, { type: "increment" });
         expect(s2).to.be.eql({test: 2});
-    })
+    });
 
-
-})
+});
