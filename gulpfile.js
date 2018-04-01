@@ -4,6 +4,7 @@ const gulpTslint = require("gulp-tslint");
 const typescript = require("typescript");
 const tsc = require("gulp-typescript");
 const del = require("del");
+const mocha = require("gulp-mocha");
 
 gulp.task("clean", () => {
     return del([
@@ -33,7 +34,7 @@ const tsLibProject = tsc.createProject("tsconfig.json", {
     typescript
 });
 
-gulp.task("build", () => {
+gulp.task("build-lib", () => {
     return gulp.src([
         "src/**/*.{ts,tsx}"
     ])
@@ -60,3 +61,19 @@ gulp.task("build-dts", () => {
     })
     .dts.pipe(gulp.dest("dts"));
 });
+
+gulp.task("build", ["build-lib", "build-dts"]);
+
+gulp.task("test", () => {
+    return gulp.src([
+        "node_modules/reflect-metadata/Reflect.js",
+        "test/**/*.test.{ts,tsx}"
+      ])
+      .pipe(mocha({ui: "bdd", require: ["ts-node/register", "test/helpers.ts"]}))
+      .on("error", (err) => {
+          console.log(err);
+          process.exit(1);
+      });
+});
+
+gulp.task("default", ["clean", "lint", "test", "build"]);
