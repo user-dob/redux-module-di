@@ -1,5 +1,5 @@
 {
-  "name": "redux.di",
+  "name": "redux-module-di",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -7,14 +7,18 @@
   "scripts": {
     "test": "mocha -r ts-node/register test/**/*.test.{ts,tsx} --require test/helpers.ts",
     "build": "gulp",
-    "publish-please": "publish-please",
-    "prepublish": "publish-please guard"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/user-dob/redux.di.git"
   },
-  "keywords": [],
+  "keywords": [
+    "redux",
+    "react",
+    "inversify",
+    "typescript"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
