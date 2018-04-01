@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import * as React from "react";
 import { expect } from "chai";
-import { shallow } from "enzyme";
+import * as TestRenderer from "react-test-renderer";
 import { ModuleBuilder, module, component } from "../../src";
 
 describe("@component()", () => {
@@ -39,8 +39,7 @@ describe("@component()", () => {
             .addModule(TestModule)
             .build();
 
-        shallow(<TestComponent />);
-
+        TestRenderer.create(<TestComponent />);    
     });
     
     it("component with 2 providers", () => {
@@ -81,7 +80,7 @@ describe("@component()", () => {
             .addModule(TestModule)
             .build();
 
-        shallow(<TestComponent />);
+        TestRenderer.create(<TestComponent />);
     });
 
     it("component with provider with provider", () => {
@@ -125,7 +124,7 @@ describe("@component()", () => {
             .addModule(TestModule)
             .build();
 
-        shallow(<TestComponent />);
+        TestRenderer.create(<TestComponent />);
     });
     
 });

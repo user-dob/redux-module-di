@@ -45,6 +45,11 @@ export const createModuleStore = (target: Type<any>, middlewares: any[] = []): M
 
 export const bootstrapModule = (target: Type<any>, element: HTMLElement) => {
     const store = createModuleStore(target);
+
+    if (!store.module.bootstrap) {
+        throw new Error("Missing bootstrap element");
+    }
+
     const Root = () => {
         return (
             <Provider store={store}>

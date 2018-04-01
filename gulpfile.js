@@ -6,6 +6,11 @@ const tsc = require("gulp-typescript");
 const del = require("del");
 const mocha = require("gulp-mocha");
 
+const PATH = {
+    SRC: "src/**/**.{ts,tsx}",
+    TEST: "test/**/**.test.{ts,tsx}"
+};
+
 gulp.task("clean", () => {
     return del([
         "lib",
@@ -18,8 +23,8 @@ gulp.task("lint", () => {
     var program = tslint.Linter.createProgram("./tsconfig.json");
     
     return gulp.src([
-        "src/**/**.{ts, tsx}",
-        "test/**/**.test.{ts, tsx}"
+        PATH.SRC,
+        PATH.TEST
     ])
     .pipe(gulpTslint({
         formatter: "stylish",
@@ -36,7 +41,7 @@ const tsLibProject = tsc.createProject("tsconfig.json", {
 
 gulp.task("build-lib", () => {
     return gulp.src([
-        "src/**/*.{ts,tsx}"
+        PATH.SRC
     ])
     .pipe(tsLibProject())
     .on("error", (err) => {
@@ -53,7 +58,7 @@ const tsDtsProject = tsc.createProject("tsconfig.json", {
 
 gulp.task("build-dts", () => {
     return gulp.src([
-        "src/**/*.{ts,tsx}"
+        PATH.SRC
     ])
     .pipe(tsDtsProject())
     .on("error", (err) => {
@@ -66,8 +71,7 @@ gulp.task("build", ["build-lib", "build-dts"]);
 
 gulp.task("test", () => {
     return gulp.src([
-        "node_modules/reflect-metadata/Reflect.js",
-        "test/**/*.test.{ts,tsx}"
+        PATH.TEST
       ])
       .pipe(mocha({ui: "bdd", require: ["ts-node/register", "test/helpers.ts"]}))
       .on("error", (err) => {
