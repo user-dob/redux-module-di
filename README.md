@@ -32,8 +32,8 @@ Module decorator to connect redux with inversify.
 
         public constructor(private provider: Provider) {}
 
+        // some reducer
         public reducer(state: any, action: any): any {
-            // some reducer
             return state;
         }
     }
@@ -53,3 +53,34 @@ Module decorator to connect redux with inversify.
 ```
 
 ## @component() decorator
+
+```ts
+    import { injectable } from "inversify";
+    import { module, component } from "redux-module-di";
+
+    @injectable()
+    class Provider {}
+
+    @component()
+    class AppComponent extends React.Component<any, any> {
+        public constructor(props: any, context: any, private provider: Provider) {
+            super(props, context);
+        }
+
+        public render() {
+            return null;
+        }
+    }
+
+    @module({
+        name: "app",
+        components: [
+            AppComponent
+        ],
+        providers: [
+            Provider
+        ]
+    })
+    class AppModule {}
+```
+
