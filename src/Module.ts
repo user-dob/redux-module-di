@@ -2,7 +2,7 @@ import { Container } from "inversify";
 import { Type, isType } from "./interfaces/type";
 import { ModuleProps, Provider, IReducerService, ISagaService } from "./interfaces/interfaces";
 import { IModuleVisitor } from "./visitors/IModuleVisitor";
-import { MODULE_METADATA_KEY } from "./annotation/module";
+import { MODULE_METADATA_KEY } from "./annotation/ReModule";
 
 export class Module {
     private props: ModuleProps;
@@ -13,7 +13,7 @@ export class Module {
         this.target = target;
         this.props = Reflect.getMetadata(MODULE_METADATA_KEY, target);
         if (!this.props) {
-            throw new Error(`Missing required @module annotation in: ${target.name}.`); 
+            throw new Error(`Missing required @ReModule annotation in: ${target.name}.`); 
         }
         this.container = new Container({defaultScope: "Singleton"});
     }

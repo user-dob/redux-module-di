@@ -1,11 +1,11 @@
 import { expect } from "chai";
-import { module, createModuleStore } from "../src";
+import { ReModule, createModuleStore } from "../src";
 
 describe("bootstrapModule", () => {
 
     it("createModuleStore", () => {
 
-        @module({
+        @ReModule({
             name: "test"
         })
         class TestModule {}

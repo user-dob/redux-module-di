@@ -1,7 +1,7 @@
 import { Type } from "../interfaces/type";
 import { Module } from "../Module";
 
-export const component = () => {
+export const ReComponent = () => {
     return (target: Type<any>): Type<any> => {
         const types = Reflect.getMetadata("design:paramtypes", target) || [];
 

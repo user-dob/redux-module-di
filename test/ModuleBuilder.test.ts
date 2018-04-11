@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { injectable } from "inversify";
-import { module, ModuleBuilder, Module, IModuleVisitor } from "../src";
+import { ReModule, ModuleBuilder, Module, IModuleVisitor } from "../src";
 
 describe("ModuleBuilder", () => {
 
-    it("build empty module", () => {
+    it("build empty ReModule", () => {
 
-        @module({
+        @ReModule({
             name: "test"
         })
         class TestModule {}
@@ -26,7 +26,7 @@ describe("ModuleBuilder", () => {
 
     });
 
-    it("build module with provider", () => {
+    it("build ReModule with provider", () => {
 
         @injectable()
         class Provider {}
@@ -38,7 +38,7 @@ describe("ModuleBuilder", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             providers: [
                 Provider,
@@ -54,7 +54,7 @@ describe("ModuleBuilder", () => {
         build.getProvider(Test);
     });
 
-    it("build module with useClass", () => {
+    it("build ReModule with useClass", () => {
 
         @injectable()
         class Provider {}
@@ -69,7 +69,7 @@ describe("ModuleBuilder", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             providers: [
                 {provide: Provider, useClass: Provider1},
@@ -85,7 +85,7 @@ describe("ModuleBuilder", () => {
         build.getProvider(Test);
     });
 
-    it("build module with useValue", () => {
+    it("build ReModule with useValue", () => {
 
         @injectable()
         class Provider {}
@@ -99,7 +99,7 @@ describe("ModuleBuilder", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             providers: [
                 {provide: Provider, useValue: value},
@@ -115,7 +115,7 @@ describe("ModuleBuilder", () => {
         build.getProvider(Test);
     });
 
-    it("build module with useContainer", () => {
+    it("build ReModule with useContainer", () => {
 
         @injectable()
         class Provider {}
@@ -127,7 +127,7 @@ describe("ModuleBuilder", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             providers: [
                 {provide: Provider, useContainer: container => container.bind(Provider).toSelf()},
@@ -143,7 +143,7 @@ describe("ModuleBuilder", () => {
         build.getProvider(Test);
     });
 
-    it("build module with 2 identical Providers", () => {
+    it("build ReModule with 2 identical Providers", () => {
 
         @injectable()
         class Provider {}
@@ -155,7 +155,7 @@ describe("ModuleBuilder", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             providers: [
                 Provider,
@@ -172,12 +172,12 @@ describe("ModuleBuilder", () => {
         build.getProvider(Test);
     });
 
-    it("build module with exports", () => {
+    it("build ReModule with exports", () => {
 
         @injectable()
         class ExportProvider {}
 
-        @module({
+        @ReModule({
             name: "import",
             exports: [
                 ExportProvider
@@ -192,7 +192,7 @@ describe("ModuleBuilder", () => {
             }
         }
         
-        @module({
+        @ReModule({
             name: "test",
             imports: [
                 ImportModule
@@ -210,12 +210,12 @@ describe("ModuleBuilder", () => {
         build.getProvider(Test);
     });
 
-    it("build module with exports with useValue", () => {
+    it("build ReModule with exports with useValue", () => {
 
         @injectable()
         class ExportProvider {}
 
-        @module({
+        @ReModule({
             name: "import",
             exports: [
                 ExportProvider
@@ -233,7 +233,7 @@ describe("ModuleBuilder", () => {
             }
         }
         
-        @module({
+        @ReModule({
             name: "test",
             imports: [
                 ImportModule
@@ -251,12 +251,12 @@ describe("ModuleBuilder", () => {
         build.getProvider(Test);
     });
 
-    it("build module with 2 exports", () => {
+    it("build ReModule with 2 exports", () => {
 
         @injectable()
         class ExportProvider {}
 
-        @module({
+        @ReModule({
             name: "import",
             exports: [
                 ExportProvider
@@ -264,7 +264,7 @@ describe("ModuleBuilder", () => {
         })
         class ImportModule {} 
         
-        @module({
+        @ReModule({
             name: "test1",
             imports: [
                 ImportModule
@@ -276,7 +276,7 @@ describe("ModuleBuilder", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test2",
             imports: [
                 ImportModule
@@ -288,7 +288,7 @@ describe("ModuleBuilder", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             imports: [
                 TestModule1,
@@ -304,7 +304,7 @@ describe("ModuleBuilder", () => {
         build.getProvider(TestModule);
     });
 
-    it("build module with Visitor", () => {
+    it("build ReModule with Visitor", () => {
 
         class Visitor implements IModuleVisitor {
             public visit(m: Module): void {
@@ -312,7 +312,7 @@ describe("ModuleBuilder", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test"
         })
         class TestModule {}

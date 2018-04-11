@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { injectable } from "inversify";
-import { module, ModuleBuilder, IReducerService, ReducerModuleVisitor } from "../../src";
+import { ReModule, ModuleBuilder, IReducerService, ReducerModuleVisitor } from "../../src";
 
 describe("ReducerModuleVisitor", () => {
 
@@ -19,7 +19,7 @@ describe("ReducerModuleVisitor", () => {
             }
         } 
 
-        @module({
+        @ReModule({
             name: "test",
             reducers: [
                 ReducerServise
@@ -65,7 +65,7 @@ describe("ReducerModuleVisitor", () => {
             }
         } 
 
-        @module({
+        @ReModule({
             name: "test",
             reducers: [
                 ReducerServise

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { injectable } from "inversify";
 import { take, fork, all, Effect } from "redux-saga/effects";
-import { module, ModuleBuilder, ISagaService, SagaModuleVisitor } from "../../src";
+import { ReModule, ModuleBuilder, ISagaService, SagaModuleVisitor } from "../../src";
 
 describe("SagaModuleVisitor", () => {
     
@@ -23,7 +23,7 @@ describe("SagaModuleVisitor", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             sagas: [
                 SagaService

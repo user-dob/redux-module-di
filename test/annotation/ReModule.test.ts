@@ -1,11 +1,11 @@
 import { expect } from "chai";
-import { module, MODULE_METADATA_KEY } from "../../src";
+import { ReModule, MODULE_METADATA_KEY } from "../../src";
 
-describe("@module()", () => {
+describe("@ReModule()", () => {
 
-    it("Should generate metadata if declared module", () => {
+    it("Should generate metadata if declared ReModule", () => {
 
-        @module({
+        @ReModule({
             name: "test"
         })
         class Test {}

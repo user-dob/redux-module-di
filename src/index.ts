@@ -1,5 +1,5 @@
-export { module, MODULE_METADATA_KEY } from "./annotation/module";
-export { component } from "./annotation/component";
+export { ReModule, MODULE_METADATA_KEY } from "./annotation/ReModule";
+export { ReComponent } from "./annotation/ReComponent";
 export { IAction, ModuleProps, IReducerService, ISagaService, Provider } from "./interfaces/interfaces";
 export { IModuleVisitor, ReducerModuleVisitor, SagaModuleVisitor } from "./visitors";
 export { Module } from "./Module";

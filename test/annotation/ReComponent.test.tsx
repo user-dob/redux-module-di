@@ -2,16 +2,16 @@ import { injectable } from "inversify";
 import * as React from "react";
 import { expect } from "chai";
 import * as TestRenderer from "react-test-renderer";
-import { ModuleBuilder, module, component } from "../../src";
+import { ModuleBuilder, ReModule, ReComponent } from "../../src";
 
-describe("@component()", () => {
+describe("@ReComponent()", () => {
 
     it("component with provider", () => {
 
         @injectable()
         class Provider {}
 
-        @component()
+        @ReComponent()
         class TestComponent extends React.Component<any, any> {
             public constructor(props: any, context: any, provider: Provider) {
                 super(props, context);
@@ -24,7 +24,7 @@ describe("@component()", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             components: [
                 TestComponent
@@ -50,7 +50,7 @@ describe("@component()", () => {
         @injectable()
         class Provider1 {}
 
-        @component()
+        @ReComponent()
         class TestComponent extends React.Component<any, any> {
             public constructor(props: any, context: any, provider: Provider, provider1: Provider1) {
                 super(props, context);
@@ -64,7 +64,7 @@ describe("@component()", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             components: [
                 TestComponent
@@ -95,7 +95,7 @@ describe("@component()", () => {
             }
         }
 
-        @component()
+        @ReComponent()
         class TestComponent extends React.Component<any, any> {
             public constructor(props: any, context: any, provider1: Provider1) {
                 super(props, context);
@@ -108,7 +108,7 @@ describe("@component()", () => {
             }
         }
 
-        @module({
+        @ReModule({
             name: "test",
             components: [
                 TestComponent
