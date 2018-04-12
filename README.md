@@ -17,11 +17,11 @@ Module decorator to connect redux with inversify.
 }
 ```
 
-## @module() decorator
+## @ReModule() decorator
 
 ```ts
     import { injectable } from "inversify";
-    import { module, IReducerService, bootstrapModule } from "redux-module-di";
+    import { ReModule, IReducerService, bootstrapModule } from "redux-module-di";
 
     @injectable()
     class Provider {}
@@ -38,7 +38,7 @@ Module decorator to connect redux with inversify.
         }
     }
 
-    @module({
+    @ReModule({
         name: "app",
         reducers: [
             AppReducerService
@@ -52,16 +52,16 @@ Module decorator to connect redux with inversify.
     bootstrapModule(AppModule, document.getElementById('app') as HTMLElement)
 ```
 
-## @component() decorator
+## @ReComponent() decorator
 
 ```ts
     import { injectable } from "inversify";
-    import { module, component } from "redux-module-di";
+    import { ReComponent, component } from "redux-module-di";
 
     @injectable()
     class Provider {}
 
-    @component()
+    @ReComponent()
     class AppComponent extends React.Component<any, any> {
         public constructor(props: any, context: any, private provider: Provider) {
             super(props, context);
@@ -72,7 +72,7 @@ Module decorator to connect redux with inversify.
         }
     }
 
-    @module({
+    @ReModule({
         name: "app",
         components: [
             AppComponent
