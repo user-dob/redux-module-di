@@ -21,16 +21,6 @@ describe('TodoReducerService', () => {
     
         todoReducerService = module.getProvider(TodoReducerService);
     })
-	
-	TestModuleBuilder.build({
-		reducers: [
-			TodoReducerService
-		],
-		providers: [
-			{provide: TodoActions, useValue: todoActions},
-			TodoService
-		]
-	})
 
     it ('should handle initial state', () => {
         expect(todoReducerService.reducer(undefined, {} as IAction)).to.be.eql([]);
