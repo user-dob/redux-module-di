@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { IAction } from '../../../../src';
-import { Todo, TodoFilters } from '../models';
+import { ITodo, TodoFilters } from '../models';
 
 @injectable()
 export class TodoActions {
@@ -12,22 +12,22 @@ export class TodoActions {
     static readonly CLEAR_COMPLETED = 'CLEAR_COMPLETED';
     static readonly SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 
-    addTodo = (todo: Todo): IAction => ({
+    addTodo = (todo: ITodo): IAction => ({
         type: TodoActions.ADD_TODO,
         payload: {todo}
     })
 
-    deleteTodo = (todo: Todo): IAction => ({
+    deleteTodo = (todo: ITodo): IAction => ({
         type: TodoActions.DELETE_TODO,
         payload: {todo}
     }) 
 
-    editTodo = (todo: Todo): IAction => ({
+    editTodo = (todo: ITodo): IAction => ({
         type: TodoActions.EDIT_TODO,
         payload: {todo}
     }) 
 
-    completeTodo = (todo: Todo): IAction => ({
+    completeTodo = (todo: ITodo): IAction => ({
         type: TodoActions.COMPLETE_TODO,
         payload: {todo}
     }) 
