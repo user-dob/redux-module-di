@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "webpack-dev-server",
     "build": "webpack",
-    "test": "mocha -r ts-node/register src/**/*.spec.{ts,tsx}"
+    "test": "mocha -r ts-node/register src/**/*.spec.{ts,tsx} --require test/helpers.ts"
   },
   "keywords": [],
   "author": "user-dob <user.dob@gmail.com>",

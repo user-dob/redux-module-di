@@ -45,3 +45,5 @@ export class TodoActions {
         payload: {filter}
     }) 
 }
+
+export const todoActions = new TodoActions();

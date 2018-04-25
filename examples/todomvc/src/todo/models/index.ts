@@ -1,2 +1,2 @@
-export { ITodo } from './Todo';
+export { ITodo, Todo } from './Todo';
 export { TodoFilters } from './TodoFilters';
