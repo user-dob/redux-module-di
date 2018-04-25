@@ -13,17 +13,5 @@
     },
     "exclude": [
       "node_modules"
-    ],
-    "awesomeTypescriptLoaderOptions": {
-      "useBabel": true,
-      "babelOptions": {
-        "babelrc": false,
-        "presets": [
-          ["env", {
-            "targets": {}
-          }]
-        ],
-        "plugins": ["transform-runtime"]
-      }
-    }
+    ]
   }

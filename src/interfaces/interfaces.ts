@@ -35,6 +35,10 @@ export interface IContainerProvider {
 
 export type Provider = Type<any> | IClassProvider | IValueProvider | IContainerProvider; 
 
+export interface INameModuleProps {
+    name: string;
+}
+
 export interface IReducerModuleProps {
     reducers?: Type<IReducerService>[];
 }
@@ -44,7 +48,6 @@ export interface ISagaModuleProps {
 }
 
 export interface IModuleProps {
-    name: string;
     imports?: Type<any>[];
     exports?: Type<any>[];
     providers?: Provider[];
@@ -52,4 +55,4 @@ export interface IModuleProps {
     bootstrap?: ReactNode;
 }
 
-export type ModuleProps = IModuleProps & IReducerModuleProps & ISagaModuleProps;
+export type ModuleProps = INameModuleProps & IModuleProps & IReducerModuleProps & ISagaModuleProps;

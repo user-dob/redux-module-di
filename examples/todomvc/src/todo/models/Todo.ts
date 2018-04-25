@@ -1,15 +1,15 @@
 export interface ITodo {
-    id?: number;
+    id: string;
     text: string;
     completed: boolean;
 }
 
 export class Todo implements ITodo {
-    id: number;
+    id: string;
     text: string;
     completed: boolean;
 
-    constructor(id: number, text: string) {
+    constructor(id: string, text: string) {
         this.id = id;
         this.text = text;
         this.completed = false;

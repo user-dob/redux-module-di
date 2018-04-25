@@ -11,13 +11,9 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
-                query: {
-                    configFileName: __dirname + '/tsconfig.json'
-                }
-            },
+            { test: /\.tsx?$/, exclude: /node_modules/, use: "ts-loader" },
+            { test: /\.jsx?$/, exclude: /node_modules/, use: "babel-loader" },
+            { test: /\.css$/, use: [ 'style-loader', 'css-loader' ] }
         ]
     }
 };

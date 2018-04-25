@@ -5,3 +5,4 @@ export { IModuleVisitor, ReducerModuleVisitor, SagaModuleVisitor } from "./visit
 export { Module } from "./Module";
 export { ModuleBuilder } from "./ModuleBuilder";
 export { bootstrapModule, createModuleStore, ModuleStore } from "./bootstrapModule";
+export { TestModuleBuilder } from './TestModuleBuilder';
