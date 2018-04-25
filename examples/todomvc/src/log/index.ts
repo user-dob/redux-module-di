@@ -1,0 +1,1 @@
+export { LogModule } from './module';

@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { IAction } from '../../../../src';
+import { IAction } from '../../../../../src';
 import { ITodo, TodoFilters } from '../models';
 
 @injectable()

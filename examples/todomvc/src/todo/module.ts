@@ -1,4 +1,4 @@
-import { ReModule } from '../../../src';
+import { ReModule } from '../../../../src';
 
 @ReModule({
     name: 'todo'
