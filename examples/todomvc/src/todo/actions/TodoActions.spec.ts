@@ -1,12 +1,26 @@
 import { expect } from 'chai';
-import { TodoActions, todoActions } from './TodoActions';
+import { TestModuleBuilder } from '../../../../../src';
+import { TodoActions } from './TodoActions';
 import { Todo } from '../models';
 
 describe('TodoActions', () => {
+
+    let todoActions: TodoActions;
+
+    beforeEach(() => {
+        const module = TestModuleBuilder.build({
+            providers: [
+                TodoActions
+            ]
+        });
+    
+        todoActions = module.getProvider(TodoActions);
+    })
+
     it('addTodo should create ADD_TODO action', () => {
-        expect(todoActions.addTodo('')).to.be.eql({
+        expect(todoActions.addTodo('test')).to.be.eql({
             type: TodoActions.ADD_TODO,
-            payload: {text: ''}
+            payload: {text: 'test'}
         });
     })
 
@@ -18,9 +32,9 @@ describe('TodoActions', () => {
     })
 
     it('editTodo should create EDIT_TODO action', () => {
-        expect(todoActions.editTodo(1, '')).to.be.eql({
+        expect(todoActions.editTodo(1, 'test')).to.be.eql({
             type: TodoActions.EDIT_TODO,
-            payload: {id: 1, text: ''}
+            payload: {id: 1, text: 'test'}
         });
     })
 

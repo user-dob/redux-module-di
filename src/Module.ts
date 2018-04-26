@@ -4,6 +4,8 @@ import { ModuleProps, Provider, IReducerService, ISagaService } from "./interfac
 import { IModuleVisitor } from "./visitors/IModuleVisitor";
 import { MODULE_METADATA_KEY } from "./annotation/ReModule";
 
+export const LINK_ON_MODULE_KEY = Symbol.for("ReModule/LINK_ON_MODULE_KEY");
+
 export class Module {
     private props: ModuleProps;
     private container: Container;
@@ -15,6 +17,8 @@ export class Module {
         if (!this.props) {
             throw new Error(`Missing required @ReModule annotation in: ${target.name}.`); 
         }
+        Reflect.defineMetadata(LINK_ON_MODULE_KEY, this, target);
+
         this.container = new Container({defaultScope: "Singleton"});
     }
 

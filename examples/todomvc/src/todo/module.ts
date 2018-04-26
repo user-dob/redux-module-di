@@ -1,5 +1,5 @@
 import { ReModule } from '../../../../src';
-import { TodoActions, todoActions } from './actions';
+import { TodoActions } from './actions';
 import { TodoReducerService } from './reducers';
 import { TodoService } from './services';
 
@@ -9,7 +9,7 @@ import { TodoService } from './services';
         TodoReducerService
     ],
     providers: [
-        {provide: TodoActions, useValue: todoActions},
+        TodoActions,
         TodoService
     ]
 })

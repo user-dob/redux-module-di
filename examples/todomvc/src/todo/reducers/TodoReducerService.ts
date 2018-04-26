@@ -11,7 +11,6 @@ export class TodoReducerService implements IReducerService {
     name = 'todos';
 
     constructor(
-        private todoActions: TodoActions,
         private todoService: TodoService
     ) {}
 
