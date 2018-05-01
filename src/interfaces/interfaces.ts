@@ -2,6 +2,7 @@ import { Reducer } from "redux";
 import { Effect } from "redux-saga";
 import { Container } from "inversify";
 import { ReactNode } from "react";
+import { MapStateToPropsParam, MapDispatchToPropsParam } from "react-redux";
 import { Type } from "./type";
 
 export interface IAction {
@@ -16,6 +17,11 @@ export interface IReducerService {
 
 export interface ISagaService {
     effects: () => Effect[];
+}
+
+export interface IConnectService {
+    mapStateToProps?: MapStateToPropsParam<any, any, any>;
+    mapDispatchToProps?: MapDispatchToPropsParam<any, any>;
 }
 
 export interface IClassProvider {
@@ -51,7 +57,7 @@ export interface IModuleProps {
     imports?: Type<any>[];
     exports?: Type<any>[];
     providers?: Provider[];
-    components?: Type<any>[]; 
+    components?: Type<any>[];
     bootstrap?: ReactNode;
 }
 

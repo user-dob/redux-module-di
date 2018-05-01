@@ -5,11 +5,13 @@ import { TodoService } from './services';
 
 @ReModule({
     name: 'todo',
+    exports: [
+        TodoActions
+    ],
     reducers: [
         TodoReducerService
     ],
     providers: [
-        TodoActions,
         TodoService
     ]
 })

@@ -126,5 +126,5 @@ describe("@ReComponent()", () => {
 
         TestRenderer.create(<TestComponent />);
     });
-    
+
 });
