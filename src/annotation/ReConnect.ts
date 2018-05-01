@@ -10,14 +10,14 @@ export const ReConnect = (ConnectService: Type<IConnectService>) => {
         class Wrap extends target {
             public static module: Module;
 
-            constructor(props: any, context: any) {
+            public constructor(props: any, context: any) {
                 super(props, context);
 
                 const connectService = Wrap.module.getProvider(ConnectService);
 
                 this.component = connect(
-                    (...args: any[]) => connectService.mapStateToProps(args),
-                    (...args: any[]) => connectService.mapDispatchToProps(args)
+                    (...args: any[]) => connectService.mapStateToProps(...args),
+                    (...args: any[]) => connectService.mapDispatchToProps(...args)
                 )(target);
             }
 

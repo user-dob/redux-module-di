@@ -1,5 +1,6 @@
 import { injectable } from 'inversify';
-import { IConnectService } from '../../../../../../src';
+import { bindActionCreators } from 'redux'
+import { IConnectService, IAction } from '../../../../../../src';
 import { TodoActions } from '../../../todo';
 
 @injectable()
@@ -14,9 +15,10 @@ export class AppConnectService implements IConnectService {
         }
     }
 
-    mapDispatchToProps() {
+    mapDispatchToProps(dispatch: any) {
         return {
-            actions: this.todoActions,
+            actions: bindActionCreators<IAction, any>(this.todoActions, dispatch)
         }
     }
 }
+
