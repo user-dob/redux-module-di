@@ -7,7 +7,7 @@ export const MODULE_METADATA_KEY = Symbol.for("ReModule/MODULE_METADATA_KEY");
 export const ReModule = (props: ModuleProps) => {
     return (target: Type<any>) => {
         if (Reflect.hasOwnMetadata(MODULE_METADATA_KEY, target)) {
-            throw new Error("Cannot apply @module decorator multiple times.");
+            throw new Error("Cannot apply @ReModule decorator multiple times.");
         }
 
         target = injectable()(target);

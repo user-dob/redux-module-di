@@ -1,10 +1,10 @@
 import { expect } from "chai";
 import { injectable } from "inversify";
-import { ReModule, getProviderByModule, ModuleBuilder } from "../src";
+import { ReModule, getProviderByModule, ModuleBuilder } from "../../src";
 
 describe("getProviderByModule", () => {
 
-    it("getProviderByModule get Provider", () => {
+    it("getProviderByModule has Provider", () => {
 
         @injectable()
         class Provider {}

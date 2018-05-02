@@ -1,8 +1,8 @@
-import { Module, LINK_ON_MODULE_KEY } from "./Module";
-import { Type } from "./interfaces/type";
+import { Type } from "../interfaces/type";
+import { getModule } from "./getModule";
 
 export const getProviderByModule = (target: Type<any>, provider: Type<any>): any => {
-    const module = Reflect.getMetadata(LINK_ON_MODULE_KEY, target) as Module;
+    const module = getModule(target);
     if (!module) {
         throw new Error(`${target.name} is not a module.`); 
     }
