@@ -13,11 +13,11 @@ export const TodoRecord = Record({
 })
 
 export class Todo extends TodoRecord implements ITodo {
-    id: string;
-    text: string;
-    completed: boolean;
-
-    constructor(id: string, text: string) {
-        super({id, text});
+    constructor(
+        public id: string,
+        public text: string,
+        public completed: boolean = false
+    ) {
+        super({id, text, completed});
     }
 }
