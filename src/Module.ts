@@ -11,6 +11,19 @@ export class Module {
     private container: Container;
     private target: Type<any>;
 
+    public static getModule = (target: Type<any>): Module | null => {
+        return Reflect.getMetadata(LINK_ON_MODULE_KEY, target) as Module;
+    }
+
+    public static getProviderByModule = (target: Type<any>, provider: Type<any>): any => {
+        const module = Module.getModule(target);
+        if (!module) {
+            throw new Error(`${target.name} is not a module.`); 
+        }
+    
+        return module.getProvider(provider);
+    }
+
     public constructor(target: Type<any>) {
         this.target = target;
         this.props = Reflect.getMetadata(MODULE_METADATA_KEY, target);

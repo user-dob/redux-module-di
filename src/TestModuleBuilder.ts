@@ -1,7 +1,7 @@
-import { ReModule } from "../annotation/ReModule";
-import { Module } from "../Module";
-import { ModuleBuilder } from "../ModuleBuilder";
-import { IModuleProps, IReducerModuleProps, ISagaModuleProps } from "../interfaces/interfaces";
+import { ReModule } from "./annotation/ReModule";
+import { Module } from "./Module";
+import { ModuleBuilder } from "./ModuleBuilder";
+import { IModuleProps, IReducerModuleProps, ISagaModuleProps } from "./interfaces/interfaces";
 
 type ModuleProps = IModuleProps & IReducerModuleProps & ISagaModuleProps;
 

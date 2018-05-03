@@ -1,7 +1,6 @@
 import { Module } from "./Module";
 import { Type } from "./interfaces/type";
 import { IModuleVisitor } from "./visitors/IModuleVisitor";
-import { getModule } from "./utils";
 
 export class ModuleBuilder implements IModuleVisitor {
     private modules: Map<string, Module>;
@@ -28,7 +27,7 @@ export class ModuleBuilder implements IModuleVisitor {
     }
 
     public initModule(target: Type<any>): Module {
-        const module = getModule(target) || new Module(target);
+        const module = Module.getModule(target) || new Module(target);
 
         if (this.modules.has(module.name)) {
             return this.modules.get(module.name) as Module;
