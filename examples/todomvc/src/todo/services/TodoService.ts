@@ -5,6 +5,6 @@ import { ITodo, Todo } from '../models';
 @injectable()
 export class TodoService {
     createTodo(text: string): ITodo {
-        return new Todo(uuid(), text);
+        return new Todo({id: uuid(), text});
     }
 }

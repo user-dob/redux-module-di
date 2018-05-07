@@ -1,9 +1,9 @@
 import { Record } from 'immutable';
 
 export interface ITodo {
-    id: string;
-    text: string;
-    completed: boolean;
+    readonly id: string;
+    readonly text: string;
+    readonly completed?: boolean;
 }
 
 export const TodoRecord = Record({
@@ -13,11 +13,10 @@ export const TodoRecord = Record({
 })
 
 export class Todo extends TodoRecord implements ITodo {
-    constructor(
-        public id: string,
-        public text: string,
-        public completed: boolean = false
-    ) {
-        super({id, text, completed});
+    public readonly id: string;
+    public readonly text: string;
+    public readonly completed: boolean;
+    public constructor(values: ITodo) {
+        super(values);
     }
 }

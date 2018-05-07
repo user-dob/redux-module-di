@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { List } from 'immutable';
 import { IReducerService, IAction } from '../../../../../src';
 import { ITodo } from '../models';
 import { TodoActions } from '../actions';
